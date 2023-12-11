@@ -8,8 +8,7 @@
 */
 
 // 快速排序
-void quick_sort(int l, int r) // 快速排序
-{
+void quick_sort(int l, int r) {
     if (l >= r)
         return;
     // 划分讲策略，划分不好导致递归层数太多，
@@ -21,8 +20,7 @@ void quick_sort(int l, int r) // 快速排序
     j = r + 1;
     mid = q[(l + r) / 2];
 
-    while (i < j)
-    {
+    while (i < j) {
         do
             i++;
         while (q[i] < mid);
@@ -36,20 +34,19 @@ void quick_sort(int l, int r) // 快速排序
     quick_sort(j + 1, r);
 }
 
-// 快速排序
-int w[N];                     // 辅助数组
-void merge_sort(int l, int r) // 归并排序
-{
+// 归并排序
+int w[N];  // 辅助数组
+void merge_sort(int l, int r) {
     if (l >= r)
         return;
 
     // 先分割，再二路归并
-    int mid = l + r >> 1; // 右移，相当于/2，但更快
+    int mid = l + r >> 1;  // 右移，相当于/2，但更快
     merge_sort(l, mid), merge_sort(mid + 1, r);
 
     int i = l, j = mid + 1, k = 0;
 
-    //归并，对于归并部分的排序可以选择其他算法
+    // 归并，对于归并部分的排序可以选择其他算法
     while (i <= mid && j <= r)
         if (q[i] <= q[j])
             w[k++] = q[i++];

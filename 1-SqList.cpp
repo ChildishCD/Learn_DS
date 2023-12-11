@@ -15,10 +15,9 @@ typedef ElementType int;
 2. 每次操作要更新 L.length
 */
 
-typedef struct
-{
-    ElementType data[Maxsize]; // 数据
-    int length;                // 表长
+typedef struct {
+    ElementType data[Maxsize];  // 数据
+    int length;                 // 表长
 } SqList;
 
 /*
@@ -27,15 +26,13 @@ typedef struct
 - 动态使用malloc
 - length 置0
 */
-void InitList(SqList &L)
-{
+void InitList(SqList& L) {
     for (int i = 0; i < Maxsize; i++)
         L.data[i] = 0;
     L.length = 0;
 }
-void InitqList(SqList &L)
-{
-    L.data = (int *)malloc(sizeof(int) * Maxsize);
+void InitqList(SqList& L) {
+    L.data = (int*)malloc(sizeof(int) * Maxsize);
     L.length = 0;
 }
 
@@ -50,8 +47,7 @@ void InitqList(SqList &L)
 /*
 5. 交换双指针
 */
-void SwitchList(SqList &L, int i, int j)
-{
+void SwitchList(SqList& L, int i, int j) {
     ElementType temp = L.data[i];
     L.data[i] = L.data[j];
     L.data[j] = temp;
@@ -64,18 +60,15 @@ void SwitchList(SqList &L, int i, int j)
 - 从后往前边移动边判断插入位置
 - 判断：length=0直接插入，否则判data；插入后即可break
 */
-void fun_1(SqList &L, int x)
-{
-    for (int i = L.length; i >= 0; i--)
-    {
+void fun_1(SqList& L, int x) {
+    for (int i = L.length; i >= 0; i--) {
         // 特判如果表空的话直接插入即可，所以要判断i是否为0
-        if (x >= L.data[i - 1] || i == 0)
-        {
+        if (x >= L.data[i - 1] || i == 0) {
             L.data[i] = x;
             L.length++;
             break;
         }
-        L.data[i] = L.data[i - 1]; // 元素从后往前一点点挪动
+        L.data[i] = L.data[i - 1];  // 元素从后往前一点点挪动
     }
 }
 
@@ -84,10 +77,8 @@ void fun_1(SqList &L, int x)
 - 双指针，前后元素交换
 - 到表中间位置，即指针相等停止
 */
-void fun_2(SqList &L)
-{
-    for (int i = 0; i < L.length / 2; i++)
-    {
+void fun_2(SqList& L) {
+    for (int i = 0; i < L.length / 2; i++) {
         SwitchList(L, i, L.length - 1 - i)
         // 注意L.length需要减1的原因还是因为数组下标从0开始的
     }
@@ -104,14 +95,11 @@ void fun_2(SqList &L)
 */
 
 // 无序（有序也能用）
-void fun_3_1(SqList &L, int x)
-{
+void fun_3_1(SqList& L, int x) {
     /*省略合法性*/
-    for (int i = 0, j = 0; i < L.length; i++)
-    {
+    for (int i = 0, j = 0; i < L.length; i++) {
         // 如果不为指定的值，直接覆盖j的位置
-        if (L.data[i] != x)
-        {
+        if (L.data[i] != x) {
             L.data[j] = L.data[i];
             j++;
         }
@@ -120,8 +108,7 @@ void fun_3_1(SqList &L, int x)
 }
 
 // 有序(递增)
-void fun_3_2(SqList &L, int x, int y)
-{
+void fun_3_2(SqList& L, int x, int y) {
     // 先判断x和y是否合法,以及表是否为空
     if (x > y || L.len < 0)
         return;
@@ -146,16 +133,14 @@ void fun_3_2(SqList &L, int x, int y)
 - 双指针
 - i从前往后，j从后往前，按条件交换元素直到相遇为止
 */
-void fun_4(SqList &L)
-{
+void fun_4(SqList& L) {
     int i = 0, j = L.len - 1;
-    while (i < j)
-    {
+    while (i < j) {
         while (L.data[i] < 0)
             i++;
         while (L.data[j] >= 0)
             j--;
-        if (i < j) // 防止，最后完成以后，ij越界交换
+        if (i < j)  // 防止，最后完成以后，ij越界交换
         {
             SwitchList(L, i, j)
         }
@@ -174,8 +159,7 @@ void fun_4(SqList &L)
 // 放在函数外面做全局变量，系统会自动对数组初始化为全0，哈希表来用下标做元素，空间做记录重复次数
 int hash[100010];
 // 注意：当然你也可以吧hash定义在函数里面，但是要写memset(hash,sizeof(hash),0)来初始化为0，因为数组在函数里面定义不会自动初始化为0
-void fun_5_1(List L)
-{
+void fun_5_1(List L) {
     // 判断表是否为空or不需要去重
     if (L.len == 1 || L.len == 0)
         return;
@@ -184,8 +168,7 @@ void fun_5_1(List L)
         hash[L.data[i]] = 1;
     //
     for (int i = 0, j = 0; i < L.len; i++)
-        if (hash[L.data[i]])
-        {
+        if (hash[L.data[i]]) {
             // 当元素第一次出现的时候，就把哈希表置0，这样就达到了更新原数组去重
             hash[L.data[i]] = 0;
             L.data[j] = L.data[i];
@@ -196,16 +179,14 @@ void fun_5_1(List L)
 }
 
 // 有序（递增）
-void fun_5_1(SqList &L)
-{
+void fun_5_1(SqList& L) {
     // 判断表是否为空or不需要去重
     if (L.len == 0 || L.len == 1)
         return;
     // 双指针算法：i为遍历原线性表，j为更新线性表
     // 注意：这里最关键的是要先对j++再更新原数组，不然会出现元素丢失
     for (int i = 0, j = 0; i < L.len; i++)
-        if (L.data[i] != L.data[j])
-        {
+        if (L.data[i] != L.data[j]) {
             j++;
             L.data[j] = L.data[i];
         }
@@ -223,13 +204,11 @@ void fun_5_1(SqList &L)
 /*
 合并 Merge
 */
-void Merge(SqList &A, SqList &B, SqList &C)
-{
-    if (A.length + B.length > C.length) // 表长超过
+void Merge(SqList& A, SqList& B, SqList& C) {
+    if (A.length + B.length > C.length)  // 表长超过
         return false;
     int i = 0, j = 0, k = 0;
-    while (i < A.length && j < B.length)
-    { // 循环，两两比较，小者存入结果表
+    while (i < A.length && j < B.length) {  // 循环，两两比较，小者存入结果表
         if (A.data[i] <= B.data[j])
             C.data[k++] = A.data[i++];
         else
@@ -248,29 +227,26 @@ void Merge(SqList &A, SqList &B, SqList &C)
 交集
 */
 // 无序
-int hash[100010]; // 因为无序，所以先用哈希存储
-void fun_1_2(SqList &a, SqList &b, SqList &c)
-{
+int hash[100010];  // 因为无序，所以先用哈希存储
+void fun_1_2(SqList& a, SqList& b, SqList& c) {
     int k = 0;
     for (int i = 0; i < a.length; i++)
         hash[a.data[i]] = 1;
     for (int i = 0; i < b.length; i++)
-        if (hash[b.data[i]]) // 直接判断赋值
+        if (hash[b.data[i]])  // 直接判断赋值
             c.data[k++] = b.data[i];
     c.length = k;
 }
 // 有序
-void fun_1_1(SqList &a, SqList &b, SqList &c)
-{
+void fun_1_1(SqList& a, SqList& b, SqList& c) {
     // 双指针算法，i指向a，j指向b，k指向c (属于归并排序里面的思想)
     int i = 0, j = 0, k = 0;
-    while (i < a.length && j < b.length)
-    {
+    while (i < a.length && j < b.length) {
         if (a.data[i] > b.data[j])
             j++;
         else if (a.data[i] < b.data[j])
             i++;
-        else // 若相等则更新c和所有指针
+        else  // 若相等则更新c和所有指针
         {
             c.data[k++] = a.data[i++];
             j++;
@@ -286,19 +262,17 @@ void fun_1_1(SqList &a, SqList &b, SqList &c)
 */
 // 无序
 //(这里的写法是保证归并之后的c，不改变ab中的相对元素位置)
-int hash[100010]; // 因为无序，直接合并，然后用哈希存储去重就可以了
-void fun_2_2(SqList &a, SqList &b, SqList &c)
-{
+int hash[100010];  // 因为无序，直接合并，然后用哈希存储去重就可以了
+void fun_2_2(SqList& a, SqList& b, SqList& c) {
     // 一边合并，一边放入哈希，来防止出现重复
     int i = 0, j = 0, k = 0;
-    while (i < a.length && j < b.length)
-    {
-        if (!hash[a.data[i]]) // 判断是否重复出现过，防止重复赋值给c
+    while (i < a.length && j < b.length) {
+        if (!hash[a.data[i]])  // 判断是否重复出现过，防止重复赋值给c
         {
             c.data[k++] = a.data[i++];
             hash[a.data[i]] = 1;
         }
-        if (!hash[b.data[j]]) // 判断是否重复出现过，防止重复赋值给c
+        if (!hash[b.data[j]])  // 判断是否重复出现过，防止重复赋值给c
         {
             c.data[k++] = b.data[j++];
             hash[b.data[i]] = 1;
@@ -316,22 +290,17 @@ void fun_2_2(SqList &a, SqList &b, SqList &c)
     c.length = k;
 }
 // 有序
-void fun_2_1(SqList &a, SqList &b, SqList &c)
-{
+void fun_2_1(SqList& a, SqList& b, SqList& c) {
     // 两个有序表，归并成一个有序表 （默认升序）
     int i = 0, j = 0, k = 0;
     while (i < a.length && j < b.length)
-        if (a.data[i] < b.data[j])
-        {
+        if (a.data[i] < b.data[j]) {
             c.data[k++] = a.data[i++];
             c.data[k++] = b.data[j++];
-        }
-        else if (a.data[i] > b.data[j])
-        {
+        } else if (a.data[i] > b.data[j]) {
             c.data[k++] = b.data[i++];
             c.data[k++] = a.data[j++];
-        }
-        else // 相等的话，只需要放一个
+        } else  // 相等的话，只需要放一个
         {
             c.data[k++] = a.data[i++];
             j++:
@@ -350,10 +319,9 @@ void fun_2_1(SqList &a, SqList &b, SqList &c)
 （以下为AUB-AB，A-B同理）
 */
 // 无序
-int hashA[100010]; // 因为无序，所以先用哈希存储
+int hashA[100010];  // 因为无序，所以先用哈希存储
 int hashB[100010];
-void fun_3_2(SqList &a, SqList &b, SqList &c)
-{
+void fun_3_2(SqList& a, SqList& b, SqList& c) {
     // 把A和B分别放到两个哈希里面
     for (int i = 0; i < a.length; i++)
         hashA[a.data[i]] = 1;
@@ -363,15 +331,14 @@ void fun_3_2(SqList &a, SqList &b, SqList &c)
     int i = 0, j = 0, k = 0;
     while (i < a.length && j < b.length)
         // 因为只要差值，所以只需判断两者都不相同的情况
-        if (a.data[i] != b.data[j])
-        {
+        if (a.data[i] != b.data[j]) {
             // 判断
-            if (!hashB[a.data[i]]) // 判断是否重复出现过，防止重复赋值给c
+            if (!hashB[a.data[i]])  // 判断是否重复出现过，防止重复赋值给c
             {
                 c.data[k++] = a.data[i++];
                 hash[a.data[i]] = 1;
             }
-            if (!hashA[b.data[j]]) // 判断是否重复出现过，防止重复赋值给c
+            if (!hashA[b.data[j]])  // 判断是否重复出现过，防止重复赋值给c
             {
                 c.data[k++] = b.data[j++];
                 hash[b.data[i]] = 1;
@@ -388,8 +355,7 @@ void fun_3_2(SqList &a, SqList &b, SqList &c)
     c.length = k;
 }
 // 有序
-void fun_3_1(SqList &a, SqList &b, SqList &c)
-{
+void fun_3_1(SqList& a, SqList& b, SqList& c) {
     // 双指针算法，这里要差集，所以谁小先添加谁，相等就跳过
     int i = 0, j = 0, k = 0;
     while (i < a.length && j < b.length)
@@ -397,7 +363,7 @@ void fun_3_1(SqList &a, SqList &b, SqList &c)
             c.data[k++] = a.data[i++];
         else if (a.data[i] > b.data[j])
             c.data[k++] = b.data[j++];
-        else // 相等跳过
+        else  // 相等跳过
         {
             i++;
             j++;
