@@ -149,6 +149,20 @@ int WPL(Tree T) {
     return result;
 }
 
+int WPL(BTree* root)  // 根据WPL的定义采用递归算法实现
+{
+    if (root == NULL)
+        return -1;
+    return WPLl(root, 0);
+}
+int WPLl(BTree* root, int d)  // d为结点深度
+{
+    if (root->left == NULL && root->right == NULL)
+        return (root->weight * d);
+    else
+        return (WPLl(root->left, d + 1) + WPLl(root->right, d + 1));
+}
+
 /*
 4️⃣判断是否为二叉排序树
 - 错误的做法，用遍历判断左<中<右
