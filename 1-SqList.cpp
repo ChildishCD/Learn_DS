@@ -5,6 +5,14 @@
 */
 static int Maxsize = 100010;
 typedef ElementType int;
+/*数组的初始化*/
+// 1 使用全局变量
+int a[n];
+// 2 在函数中使用指针
+int* q;
+q = (int*)malloc(sizeof(int) * n);  // 申请n+1个位置的辅助空间
+for (int i = 0; i < n; i++)         // 数组元素初值置0
+    *(q + i) = 0;                   // 获取数组值的方法
 
 // 线性表——顺序存储
 // SqList
