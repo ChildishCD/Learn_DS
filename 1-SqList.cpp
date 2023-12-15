@@ -13,6 +13,7 @@ int* q;
 q = (int*)malloc(sizeof(int) * n);  // 申请n+1个位置的辅助空间
 for (int i = 0; i < n; i++)         // 数组元素初值置0
     *(q + i) = 0;                   // 获取数组值的方法
+free(q);                            // 回收存储空间
 
 // 线性表——顺序存储
 // SqList
