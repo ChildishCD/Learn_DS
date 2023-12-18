@@ -8,6 +8,7 @@ typedef ElementType int;
 1. 用链表来写线性表一般不用写长度length,因为链表属于动态分配存储
 2. int length;如果真需要加上的话,注意更新链表的时候只更新head->lengt
 3. 单链表，循环单链表，双链表，循环双链表
+4. 用NULL将链表分割为多个链表
 */
 
 typedef struct ListNode {
@@ -262,6 +263,7 @@ int Search_k(LinkList list, int k) {  // 查找链表上第 k 个位置上的结
 5️⃣判断链表中是否有环
 - 快慢指针遍历链表，快指针步距为 2，慢指针步距为 1
 - 如果链表带环，两指针一定会在环中相遇。
+- 利用快慢指针可以寻找链表的中间节点
 */
 Int hasCycle(ListNode* head) {  // 判断链表是否有环
     if (head == NULL || head->next == NULL)
