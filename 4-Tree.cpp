@@ -64,6 +64,19 @@ void levelOder(Tree root) {
     }
 }
 
+/*
+2. 顺序存储方法
+*/
+//前序 遍历
+void PreTraverse(SqBiTree T, int i) {
+    visit(T[i]);
+    if (T[2 * i + 1] != NULL) {
+        PreTraverse(T, 2 * i + 1);
+    }
+    if (T[2 * i + 2] != NULL) {
+        PreTraverse(T, 2 * i + 2);
+    }
+}
 /*================== 题型 ===================*/
 
 /*
@@ -167,6 +180,7 @@ int WPLl(BTree* root, int d)  // d为结点深度
 4️⃣判断是否为二叉排序树
 - 错误的做法，用遍历判断左<中<右
 - 正确：利用中序遍历，判断遍历序列是否有序，边遍历边判断
+- 设置一个全局变量存前驱的值，可以边遍历边判断
 */
 int temp = MIN_INT;  // 设为定义域的最小值(升序)，MIN_INT为int的最小值
 bool flag = ture;
